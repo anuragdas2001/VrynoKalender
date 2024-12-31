@@ -1,0 +1,46 @@
+export enum ModuleFieldsItems {
+  fields = "fields",
+}
+
+export enum NavigationItems {
+  navigationGroupItems = "navigation-group-items",
+}
+
+export enum SettingsMenuItem {
+  personalSettings = "personal-settings",
+  emailSettings = "email-settings",
+  emailCampaign = "email-campaign",
+  users = "users",
+  addUser = "users.add",
+  editUser = "users.edit",
+  rolePermission = "role-permission",
+  permissions = "role-permission.permissions",
+  profile = "profile",
+  deleteProfile = "profile.delete",
+  navigationGroups = "navigation",
+  navigationGroupItems = "navigation.navigation-group-items",
+  moduleFields = "module-fields",
+  fields = "module-fields.fields",
+  fieldsDependency = "module-fields.fields-dependency",
+  createDependency = "module-fields.create-dependency",
+  dealPipeline = "module-fields.deal-pipeline",
+  leadConversionMapping = "module-fields.lead-conversion-mapping",
+  quoteConversionMapping = "module-fields.quote-conversion-mapping",
+  quotedItemConversionMapping = "module-fields.quoted-item-conversion-mapping",
+  salesOrderConversionMapping = "module-fields.sales-order-conversion-mapping",
+  orderedItemConversionMapping = "module-fields.ordered-item-conversion-mapping",
+  templates = "templates",
+  emailTemplates = "templates.email-template",
+  moduleTemplates = "templates.module-template",
+  viewEmailTemplate = "templates.email-template.view",
+  viewModuleTemplate = "templates.module-template.view",
+  addEmailTemplate = "templates.email-template.add",
+  addModuleTemplate = "templates.module-template.add",
+  editEmailTemplate = "templates.email-template.edit",
+  editModuleTemplate = "templates.module-template.edit",
+  productTax = "module-fields.product-tax",
+  workflows = "workflows",
+  addWorkFlow = "workflows.add",
+  editWorkFlow = "workflows.edit",
+  actions = "actions",
+}

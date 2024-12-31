@@ -1,0 +1,69 @@
+
+.app
+{
+    width:100%;
+    height: 100vh;
+    border:1px solid red;
+    display: flex;
+    margin:0;
+    padding:0;
+}
+
+.left
+{
+    /* width: 15%; */
+    border:1px solid blue;
+    background-color: white;
+    /* background: transparent; */
+    position: relative;
+    z-index: 999;
+}
+
+.right
+{
+    background-color: rgba(218, 217, 217, 0.33);
+    /* background:transparent; */
+    border:1px solid green;
+    position: relative;
+}
+
+
+@media screen and (min-width:768px)
+{
+    .left{
+        width:7%;
+    }
+    .right{
+        width:93%;
+    }
+
+    .user_container
+    {
+        padding:20px 50px;
+        justify-content: flex-end;
+    }
+}
+
+@media screen and  (min-width:1024px)
+{
+    .left
+    {
+        width: 17%;
+    }  
+    .right
+    {
+        width: 83%;
+    }  
+}
+
+@media screen and (min-width:1280px)
+{
+    .left
+    {
+        width: 15%;
+    }
+    .right
+    {
+        width:  85%
+    }
+} 

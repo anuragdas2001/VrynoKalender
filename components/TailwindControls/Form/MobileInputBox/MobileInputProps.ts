@@ -1,0 +1,38 @@
+import { SupportedLabelLocations } from "../../SupportedLabelLocations";
+
+export type MobileInputProps = {
+  name: string;
+  type?: string;
+  currentFormLayer?: boolean;
+  appName?: string;
+  modelName?: string;
+  id?: string;
+  placeholder?: string;
+  label?: string;
+  leftIcon?: React.ReactElement;
+  rightIcon?: React.ReactElement;
+  countryCodeInUserPreference: string;
+  labelLocation?: SupportedLabelLocations;
+  value?: string;
+  error?: string;
+  disabled?: boolean;
+  required?: boolean;
+  country?: string;
+  editMode?: boolean;
+  allowMargin?: boolean;
+  externalExpressionToCalculateValue?: string;
+  rejectRequired?: boolean;
+  addClear?: boolean;
+  formResetted?: boolean;
+  checkDuplicacy?: boolean;
+  systemDefined?: boolean;
+  countryCodeFromTimezone?: string;
+  useCountryCode?: boolean;
+  paddingInPixelForInputBox?: number;
+  labelUsedForError?: string;
+  rightIconClick?: () => void;
+  onBlur?: () => void;
+  onChange?: (e: React.ChangeEvent<any>) => void;
+  dataTestId?: string;
+  hideValidationMessages?: boolean;
+};
