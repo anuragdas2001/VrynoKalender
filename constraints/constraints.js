@@ -42,7 +42,7 @@ const dashboardDetails = [
       },
     ],
     widgets: ["string1", "string2", "string3"], // String array
-    url: "/meetings",
+    url: "/meetings/upcoming",
     icon: <Calendar />,
   },
 
