@@ -1,4 +1,3 @@
-// Custom_Availability Component
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -6,6 +5,7 @@ import { useParams } from "next/navigation";
 import { daysOfWeek } from "../../daysofweek";
 import FormTimePicker from "../../components/TailwindControls/Form/TimePicker/FormTimePicker";
 import { availability } from "../../availability";
+import { Plus, X } from "lucide-react";
 
 // Helper function to convert HH:mm string to Date object
 const convertTimeToDate = (time) => {
@@ -41,6 +41,36 @@ const Custom_Availability = () => {
     return acc;
   }, {});
 
+  const [extraTimeslots, setExtraTimeslots] = useState({});
+
+  // Add a new time slot for a given day
+  const addTimeSlot = (dayKey) => {
+    setExtraTimeslots((prev) => ({
+      ...prev,
+      [dayKey]: [
+        ...(prev[dayKey] || []),
+        { start: convertTimeToDate("09:00"), end: convertTimeToDate("17:00") },
+      ],
+    }));
+  };
+
+  // Remove a time slot for a given day
+  const removeTimeSlot = (dayKey, index) => {
+    setExtraTimeslots((prev) => {
+      const updatedTimes = prev[dayKey].filter((_, i) => i !== index);
+      return { ...prev, [dayKey]: updatedTimes };
+    });
+  };
+
+  // Handle changes in additional time slots
+  const handleAdditionalTimeChange = (dayKey, index, field, value) => {
+    setExtraTimeslots((prev) => {
+      const updatedTimes = [...(prev[dayKey] || [])];
+      updatedTimes[index] = { ...updatedTimes[index], [field]: value };
+      return { ...prev, [dayKey]: updatedTimes };
+    });
+  };
+
   if (!availabilityID) {
     return (
       <div className="h-screen flex justify-center items-center text-red-500 font-semibold">
@@ -50,9 +80,9 @@ const Custom_Availability = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col justify-center p-6 items-center">
-      <div className="w-full bg-white shadow-lg p-8 rounded-lg">
-        <h1 className="text-xl font-bold text-center mb-4 text-blue-700">
+    <div className="min-h-screen px-4 md:px-16 lg:px-40 py-8 flex flex-col items-center">
+      <div className="w-full bg-white shadow-lg rounded-lg mt-10 p-6 md:p-12">
+        <h1 className="text-2xl font-bold text-center text-blue-700 mb-6">
           {availabilityName || "Loading..."}
         </h1>
 
@@ -70,7 +100,6 @@ const Custom_Availability = () => {
             }, {})
           )}
           onSubmit={(values) => {
-            // Converting Date objects back to HH:mm string format for submission
             const formattedValues = Object.keys(values).reduce((acc, key) => {
               const time = values[key];
               const formattedTime = `${time.getHours()}:${time.getMinutes()}`;
@@ -80,18 +109,18 @@ const Custom_Availability = () => {
             console.log("Availability Submitted:", formattedValues);
           }}
         >
-          {({ values, errors, touched, setFieldValue }) => (
+          {({ values, setFieldValue }) => (
             <Form>
               {daysOfWeek.map((day) => (
-                <div key={day.key} className="mb-6">
-                  <div className="grid grid-cols-3 gap-4 items-center">
+                <div key={day.key} className="mb-6 flex flex-col">
+                  <div className="flex items-center">
                     {/* Day Name */}
-                    <h3 className="text-base font-semibold text-gray-700 text-center">
+                    <h3 className="w-1/5 text-base font-semibold text-gray-700 text-center">
                       {day.name}
                     </h3>
 
-                    {/* Start Time Picker */}
-                    <div>
+                    {/* Time Pickers */}
+                    <div className="flex items-center gap-20 w-3/5">
                       <FormTimePicker
                         name={`${day.key}Start`}
                         placeholder="Start Time"
@@ -100,16 +129,6 @@ const Custom_Availability = () => {
                           setFieldValue(`${day.key}Start`, value)
                         }
                       />
-                      {errors[`${day.key}Start`] &&
-                        touched[`${day.key}Start`] && (
-                          <div className="text-red-500 text-sm mt-1">
-                            {errors[`${day.key}Start`]}
-                          </div>
-                        )}
-                    </div>
-
-                    {/* End Time Picker */}
-                    <div>
                       <FormTimePicker
                         name={`${day.key}End`}
                         placeholder="End Time"
@@ -118,16 +137,67 @@ const Custom_Availability = () => {
                           setFieldValue(`${day.key}End`, value)
                         }
                       />
-                      {errors[`${day.key}End`] && touched[`${day.key}End`] && (
-                        <div className="text-red-500 text-sm mt-1">
-                          {errors[`${day.key}End`]}
-                        </div>
-                      )}
                     </div>
+
+                    {/* Add New Time Slot Button */}
+                    <div className="flex gap-20 items-center">
+                      <button
+                        type="button"
+                        onClick={() => addTimeSlot(day.key)}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        <Plus size={20} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Additional Time Slots */}
+                  <div className="ml-[20%] mt-4">
+                    {extraTimeslots[day.key]?.map((slot, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-20 mb-4 w-3/5"
+                      >
+                        <FormTimePicker
+                          name={`${day.key}StartAdditional-${index}`}
+                          placeholder="Start Time"
+                          value={slot.start}
+                          onChange={(value) =>
+                            handleAdditionalTimeChange(
+                              day.key,
+                              index,
+                              "start",
+                              value
+                            )
+                          }
+                        />
+                        <FormTimePicker
+                          name={`${day.key}EndAdditional-${index}`}
+                          placeholder="End Time"
+                          value={slot.end}
+                          onChange={(value) =>
+                            handleAdditionalTimeChange(
+                              day.key,
+                              index,
+                              "end",
+                              value
+                            )
+                          }
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeTimeSlot(day.key, index)}
+                          className="text-red-600 hover:text-red-800"
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
-              <div className="mt-6 text-center">
+
+              <div className="mt-8 text-center">
                 <button
                   type="submit"
                   className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 ease-in-out"

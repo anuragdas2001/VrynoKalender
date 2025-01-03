@@ -10,7 +10,8 @@ import { MessageListContext } from "../../../../../pages/_app";
 import { User } from "../../../../../models/Accounts";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import Button from "../../../../../components/TailwindControls/Form/Button/Button";
+import { AccountActions } from "../../../../../account-actions";
 export type DashboardSidePageNavigationProps = {
   appName: string;
   modelName: string;
@@ -109,13 +110,11 @@ const DashboardSidePageNavigation = ({
       </div>
       <hr className={`border-[2px] border-gray-300`} />
       <div
-        className={`mt-2 w-full ${
+        className={`mt-2 w-full border-gray-300 overflow-y-auto overflow-x-hidden ${
           appMessage?.length > 0 && instanceMessage?.length > 0
-            ? `h-[60vh] 2xl:h-[70vh]`
-            : appMessage?.length > 0 || instanceMessage?.length > 0
-            ? `h-[65vh] 2xl:h-[75vh]`
-            : `h-[70vh] 2xl:h-[80vh]`
-        } border-gray-300 overflow-y-auto overflow-x-hidden`}
+            ? "h-[65vh] 2xl:h-[75vh]"
+            : "h-[60vh] 2xl:h-[72vh]"
+        }`}
       >
         {dashboards.map((dashboard, index) => (
           <DashboardSidePageNavigationItem
@@ -135,6 +134,33 @@ const DashboardSidePageNavigation = ({
         ))}
       </div>
       <hr className={`border-[2px] border-gray-300`} />
+
+      {AccountActions.map((item) => (
+        <div className="pt-4" key={item.id}>
+          <Button
+            id={item.id}
+            name={item.name}
+            userEventName={item.userEventName}
+            customStyle="w-full flex justify-between gap-1 bg-gray-100 p-2 text-vryno-theme-light-blue border-l-4 border-vryno-theme-light-blue"
+          >
+            <div className="flex gap-2 items-center">
+              {/* Render icon if it exists */}
+              {item.icon && <item.icon />}
+              {/* Render image if it exists */}
+              {item.image && (
+                <div className="h-6 w-6">
+                  <img
+                    className="bg-gray-600 rounded-full"
+                    src={item.image}
+                    alt={item.label}
+                  />
+                </div>
+              )}
+              <span>{item.label}</span>
+            </div>
+          </Button>
+        </div>
+      ))}
     </>
   );
 };

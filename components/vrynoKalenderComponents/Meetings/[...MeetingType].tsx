@@ -35,7 +35,29 @@ const MeetingType = () => {
     tabs.find((tab) => tab.id === activeTab)?.label || "Upcoming";
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="w-64 bg-white shadow-lg">
+        <div className="p-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Meetings</h1>
+          <nav className="space-y-2">
+            {tabs.map(({ id, label }) => (
+              <button
+                key={id}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
+                  activeTab === id
+                    ? "bg-blue-500 text-white font-semibold"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+                onClick={() => handleTabChange(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
       {/* Main Content */}
       <div className="flex-1 p-8 overflow-auto">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
@@ -62,28 +84,6 @@ const MeetingType = () => {
             </p>
           </div>
         )}
-      </div>
-
-      {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
-        <div className="p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">Meetings</h1>
-          <nav className="space-y-2">
-            {tabs.map(({ id, label }) => (
-              <button
-                key={id}
-                className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
-                  activeTab === id
-                    ? "bg-blue-500 text-white font-semibold"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-                onClick={() => handleTabChange(id)}
-              >
-                {label}
-              </button>
-            ))}
-          </nav>
-        </div>
       </div>
     </div>
   );

@@ -74,7 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <div className="relative flex w-full h-full ">
         {/* <div className='min-h-screen overflow-y-auto fixed inset-y-0 shadow-md left-0 mt-20 sm:mt-21.5 md:mt-15 bg-white hidden sm:w-4/12 md:w-3/12 lg:w-1/5 xl:w-2/12 px-4 py-2 z-[600] sm:block pb-[60px]'> */}
-        <div className="min-h-screen overflow-y-auto fixed inset-y-0 shadow-md left-0  bg-white hidden sm:w-4/12 md:w-3/12 lg:w-1/5 xl:w-2/12 px-4 py-2 z-[600] sm:block pb-[60px]">
+        <div className="h-screen overflow-y-auto fixed inset-y-0 shadow-md left-0  bg-white hidden sm:w-4/12 md:w-3/12 lg:w-1/5 xl:w-2/12  px-4 py-2 z-[600] sm:block pb-[60px]">
           {/*
                         mt-20 
                         sm:mt-21.5 
