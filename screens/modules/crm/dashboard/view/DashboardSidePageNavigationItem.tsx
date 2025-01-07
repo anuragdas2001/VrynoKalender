@@ -22,6 +22,7 @@ export const DashboardSidePageNavigationItem = ({
   handlePreferencesChange,
   setDeleteModal,
   user,
+  isCollapsed,
 }: {
   index: number;
   appName: string;
@@ -37,6 +38,7 @@ export const DashboardSidePageNavigationItem = ({
     item: IDashboardDetails;
   }) => void;
   user: User | null;
+  isCollapsed: boolean;
 }) => {
   const router = useRouter();
   const [actionMenuDashboardVisible, setActionMenuDashboardVisible] =
@@ -62,7 +64,9 @@ export const DashboardSidePageNavigationItem = ({
               ? "cursor-pointer text-vryno-theme-light-blue"
               : "opacity-50"
           }`}
-          onClick={() => dashboard?.id && handlePreferencesChange(dashboard, false)}
+          onClick={() =>
+            dashboard?.id && handlePreferencesChange(dashboard, false)
+          }
           userEventName="dashboard-toggle-user-preference-true-click"
           renderChildrenOnly={true}
         >
@@ -89,7 +93,11 @@ export const DashboardSidePageNavigationItem = ({
         }}
         key={index}
       >
-        <span className="text-xsm">{dashboard?.name}</span>
+        {!isCollapsed ? (
+          <span className="text-xs ">{dashboard?.name}</span>
+        ) : (
+          ""
+        )}
       </a>
 
       <div
@@ -144,8 +152,7 @@ export const DashboardSidePageNavigationItem = ({
                 label: "Delete",
                 onClick:
                   dashboard?.id && user?.id === dashboard?.createdBy
-                    ? () =>
-                        setDeleteModal({ visible: true, item: dashboard })
+                    ? () => setDeleteModal({ visible: true, item: dashboard })
                     : undefined,
                 icon: (
                   <DeleteBinIcon

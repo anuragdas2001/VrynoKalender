@@ -111,7 +111,7 @@ const EventTypes = () => {
     <div className="min-h-screen ">
       <div className="flex justify-center items-center gap-5"></div>
       <div className="mx-auto bg-white shadow-xl rounded-lg border border-gray-100 overflow-hidden">
-        <div className="bg-blue-600 flex items-center    text-white p-6 shadow-md">
+        <div className="bg-blue-500 flex items-center    text-white p-6 shadow-md">
           <button onClick={handleBack} className="h-20 w-20">
             <MoveLeft size={48} />
           </button>
@@ -123,7 +123,7 @@ const EventTypes = () => {
               name="save"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-30 bg-green-600 px-4 rounded-lg"
+              customStyle="h-10 w-30 text-green-500 px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Save />
@@ -134,7 +134,7 @@ const EventTypes = () => {
               name="copy"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-14 bg-blue-900 px-4 rounded-lg"
+              customStyle="h-10 w-14 text-blue-950 px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Copy />
@@ -145,7 +145,7 @@ const EventTypes = () => {
               name="cancel"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-30 bg-red-600 px-4 rounded-lg"
+              customStyle="h-10 w-30 text-red-500 px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Trash2 />

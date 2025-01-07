@@ -26,15 +26,15 @@ export const MeetingCard = ({ meeting, status }) => {
       year: "numeric",
     });
   };
-
+  const IconComponent = meeting.icon;
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
       {/* Card Header */}
       <div className="relative p-6 pb-4">
         <span
-          className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${getBadgeStyle()} mb-3`}
+          className={`inline-block p-3 rounded-full text-sm font-medium ${getBadgeStyle()} mb-3`}
         >
-          {status}
+          <IconComponent />
         </span>
         <h3 className="text-xl font-semibold text-gray-800 mb-4 line-clamp-2">
           {meeting.title}

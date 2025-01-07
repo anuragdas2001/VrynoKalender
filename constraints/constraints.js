@@ -40,6 +40,18 @@ const dashboardDetails = [
           { key: "key" }, // Assuming `customView` is an array of `BaseGenericObjectType`
         ],
       },
+      {
+        id: "1009",
+        fieldPermissionMessage: null,
+        name: "abc",
+        key: null, // Assuming `key` is `WidgetsView | string | null`
+        widgetType: "abc",
+        widgetMetadata: null, // Assuming it’s of type `BaseGenericObjectType | null`
+        moduleViewId: ["1009"], // String array
+        customView: [
+          { key: "key" }, // Assuming `customView` is an array of `BaseGenericObjectType`
+        ],
+      },
     ],
     widgets: ["string1", "string2", "string3"], // String array
     url: "/meetings/upcoming",

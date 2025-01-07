@@ -23,7 +23,7 @@ const SidePanel: React.FC<SidePanelProps> = ({ sidepanel, serviceName }) => {
   };
 
   return (
-    <div className="bg-blue-600 text-white p-4 shadow-md md:h-screen fixed top-0 md:static w-full md:w-1/4">
+    <div className="bg-blue-500 text-white p-4 shadow-md md:h-screen fixed top-0 md:static w-full md:w-1/4">
       {/* Service name header */}
       {/* <h2 className="text-xl font-semibold mb-4 md:mb-6">{serviceName}</h2> */}
 

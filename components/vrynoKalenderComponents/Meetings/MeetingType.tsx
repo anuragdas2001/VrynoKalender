@@ -1,4 +1,3 @@
-// pages/meetings/[type].js
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { meetingsData } from "../../../meeting";

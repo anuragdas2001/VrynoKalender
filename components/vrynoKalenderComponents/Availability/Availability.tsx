@@ -55,7 +55,7 @@ const Availability = () => {
     <div className="p-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between">
-          <h1 className="text-xl font-bold text-blue-600 mb-6">Availability</h1>
+          <h1 className="text-xl font-bold text-blue-500 mb-6">Availability</h1>
           <Button
             id="201"
             userEventName="create-availability"
@@ -73,12 +73,12 @@ const Availability = () => {
           {availabilities.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 group cursor-pointer"
+              className="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-300 group cursor-pointer"
               onClick={() => handleCardClick(item.id)}
             >
               <div className="px-4 py-3 bg-white">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-blue-900">
+                  <h2 className="text-xl font-medium ">
                     {item.availabilityName}
                   </h2>
                   <ChevronRight className="w-5 h-5 text-blue-400 group-hover:text-blue-600 transform group-hover:translate-x-1 transition-all" />
