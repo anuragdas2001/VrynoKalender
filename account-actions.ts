@@ -8,6 +8,7 @@ export const AccountActions = [
     icon: LogOut,
     label: "Logout",
     image: null,
+    url: "/logout",
   },
   {
     id: "302",
@@ -16,6 +17,7 @@ export const AccountActions = [
     icon: Settings,
     label: "Settings",
     image: null,
+    url: "/settings/general",
   },
   {
     id: "303",
@@ -25,5 +27,6 @@ export const AccountActions = [
     label: "Profile",
     image:
       "https://res.cloudinary.com/dgz1duuwu/image/upload/v1719236393/nu2oa9upb9n6kwjrjyxq.jpg",
+    url: "/profile",
   },
 ];

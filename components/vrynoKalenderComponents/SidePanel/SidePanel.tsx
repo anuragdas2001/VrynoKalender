@@ -16,14 +16,14 @@ interface SidePanelProps {
 const SidePanel: React.FC<SidePanelProps> = ({ sidepanel, serviceName }) => {
   const [activeId, setActiveId] = useState<string>(sidepanel[0]?.id || "0");
   const router = useRouter();
-  const {id} = useParams();
+  const { id } = useParams();
   const handleClick = (id: string, tabName: string) => {
     setActiveId(id);
     router.push(`/event_types/${id}?tabName=${tabName}`);
   };
 
   return (
-    <div className="bg-blue-500 text-white p-4 shadow-md md:h-screen fixed top-0 md:static w-full md:w-1/4">
+    <div className="bg-white text-black p-4 shadow-md md:h-screen fixed top-0 md:static w-full md:w-1/4">
       {/* Service name header */}
       {/* <h2 className="text-xl font-semibold mb-4 md:mb-6">{serviceName}</h2> */}
 
@@ -38,7 +38,9 @@ const SidePanel: React.FC<SidePanelProps> = ({ sidepanel, serviceName }) => {
             >
               <button
                 className={`flex items-center whitespace-nowrap p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                  activeId === item.id ? "bg-blue-500" : "hover:bg-blue-500"
+                  activeId === item.id
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-blue-500 hover:text-white"
                 }`}
                 type="button"
                 onClick={() => handleClick(id, item.tabName)}

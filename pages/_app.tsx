@@ -31,8 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const dashboardArr: IDashboardDetails[] = dashboardDetails;
   const router = useRouter();
   const currentTab = router.asPath.split("/")[1];
+  const currentTab2 = router.asPath.split("/")[2];
   //availability shrink of dashboard
-  const isCollapsed = currentTab === "meetings";
+  console.log("currentTab2", currentTab2);
+  const isCollapsed =
+    currentTab === "meetings" ||
+    (currentTab === "event_types" && Boolean(currentTab2)) ||
+    currentTab === "settings";
 
   const handlePreferencesChange = (
     dashboard: IDashboardDetails,
@@ -47,7 +52,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }): void => {
     console.log("setDeleteModal", tempObj);
   };
-
+  console.log("isCollapsed", isCollapsed);
   return (
     <div className="relative flex w-full h-full">
       <div

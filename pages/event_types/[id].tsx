@@ -110,12 +110,12 @@ const EventTypes = () => {
   return (
     <div className="min-h-screen ">
       <div className="flex justify-center items-center gap-5"></div>
-      <div className="mx-auto bg-white shadow-xl rounded-lg border border-gray-100 overflow-hidden">
-        <div className="bg-blue-500 flex items-center    text-white p-6 shadow-md">
+      <div className="mx-auto  shadow-xl rounded-lg border border-gray-100 overflow-hidden">
+        <div className="text-black bg-white flex items-center px-6 shadow-md">
           <button onClick={handleBack} className="h-20 w-20">
             <MoveLeft size={48} />
           </button>
-          <h2 className="text-xl font-semibold">{initialEvent?.Service}</h2>
+          <h2 className="text-xl text-blue-500 font-semibold">{initialEvent?.Service}</h2>
           <div className="flex justify-end items-center gap-4 ml-auto">
             <Button
               id="102"
@@ -123,7 +123,7 @@ const EventTypes = () => {
               name="save"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-30 text-green-500 px-4 rounded-lg"
+              customStyle="h-10 w-30  px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Save />
@@ -134,7 +134,7 @@ const EventTypes = () => {
               name="copy"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-14 text-blue-950 px-4 rounded-lg"
+              customStyle="h-10 w-14 px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Copy />
@@ -145,7 +145,7 @@ const EventTypes = () => {
               name="cancel"
               kind="icon"
               userEventName="onclick"
-              customStyle="h-10 w-30 text-red-500 px-4 rounded-lg"
+              customStyle="h-10 w-30 text-red-400 px-4 rounded-lg"
               onClick={handleCancel}
             >
               <Trash2 />
@@ -166,7 +166,7 @@ const EventTypes = () => {
               onSubmit={(values) => handleSave(values)}
             >
               {({ values, setFieldValue }) => (
-                <Form className="flex-1 p-8 space-y-6">
+                <Form className="flex-1 p-8 space-y-6 vryno-bg-shade">
                   {/* Workspace Field */}
                   <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
                     <label className="w-44 flex justify-start items-center gap-2">

@@ -42,9 +42,8 @@ const DashboardSidePageNavigation = ({
   const { appMessage, instanceMessage } = useContext(MessageListContext);
   const [currentPageNavigation, setCurrentPageNavigation] =
     React.useState<IDashboardDetails>();
-  const [collapsed, setIsCollapsed] = useState(isCollapsed);
   const router = useRouter();
-
+  console.log("isCollapsed", isCollapsed);
   React.useEffect(() => {
     const basePath = router.asPath.split("/")[1];
     const fullPath = router.asPath;
@@ -73,22 +72,26 @@ const DashboardSidePageNavigation = ({
   return (
     <div
       className={`relative transition-all duration-300 ease-in-out ${
-        collapsed ? "w-16" : ""
+        isCollapsed ? "w-16" : ""
       }`}
     >
       <div
         className={`h-14 w-full  flex justify-between items-center  ${
-          collapsed ? "justify-center" : ""
+          isCollapsed ? "justify-center" : ""
         }`}
       >
         <Image src={IMAGES.LOGO} alt="logo_image" className="w-8 h-8" />
-        {!collapsed && (
+        {isCollapsed ? (
+          <span className="text-[#2f98ff] text-[22px] font-semibold sm:text-[17px] md:text-[14px] lg:text-[16px] xl:text-[20px]">
+            {/* VrynoKalendar */}
+          </span>
+        ) : (
           <span className="text-[#2f98ff] text-[22px] font-semibold sm:text-[17px] md:text-[14px] lg:text-[16px] xl:text-[20px]">
             VrynoKalendar
           </span>
         )}
       </div>
-      {collapsed ? (
+      {isCollapsed ? (
         <hr className="border-2 border-gray-300 w-12" />
       ) : (
         <hr className="border-2 border-gray-300" />
@@ -104,7 +107,7 @@ const DashboardSidePageNavigation = ({
         {dashboards.map((dashboard, index) => (
           <div
             key={index}
-            className={`relative group  ${collapsed ? "py-1" : ""}`}
+            className={`relative group  ${isCollapsed ? "py-1" : ""}`}
           >
             <DashboardSidePageNavigationItem
               index={index}
@@ -118,7 +121,7 @@ const DashboardSidePageNavigation = ({
               handlePreferencesChange={handlePreferencesChange}
               setDeleteModal={setDeleteModal}
               user={user}
-              isCollapsed={collapsed}
+              isCollapsed={isCollapsed}
             />
             {isCollapsed && (
               <div
@@ -134,7 +137,7 @@ const DashboardSidePageNavigation = ({
         ))}
       </div>
 
-      {collapsed ? (
+      {isCollapsed ? (
         <hr className="border-2 border-gray-300 w-12" />
       ) : (
         <hr className="border-2 border-gray-300" />
@@ -142,14 +145,15 @@ const DashboardSidePageNavigation = ({
 
       {AccountActions.map((item) => (
         <div
-          className={`relative group py-2  ${collapsed ? "" : ""}`}
+          className={`relative group py-2  ${isCollapsed ? "" : ""}`}
           key={item.id}
         >
           <Button
+            onClick={() => router.push(item.url)}
             id={item.id}
             name={item.name}
             userEventName={item.userEventName}
-            customStyle={`w-full flex  ${collapsed ? "justify-between " : ""} 
+            customStyle={`w-full flex  ${isCollapsed ? "justify-between " : ""} 
                          border-vryno-theme-light-blue px-2 py-2 hover:bg-gray-100 focus:bg-gray-100 
                          focus:outline-none focus:border-vryno-theme-light-blue 
                          focus:text-vryno-theme-light-blue focus:border-l-4 
@@ -157,7 +161,7 @@ const DashboardSidePageNavigation = ({
           >
             <div
               className={`flex justify-start gap-2${
-                collapsed ? "justify-center" : ""
+                isCollapsed ? "justify-center" : ""
               }`}
             >
               {item.icon && <item.icon className="h-6 w-6" />}
@@ -170,9 +174,9 @@ const DashboardSidePageNavigation = ({
                   />
                 </div>
               )}
-              {!collapsed && <span>{item.label}</span>}
+              {!isCollapsed && <span>{item.label}</span>}
             </div>
-            {collapsed && (
+            {isCollapsed && (
               <div
                 className="absolute left-full top-1/2 -translate-y-1/2 ml-2 
                             bg-white-800 text-black font-poppins px-2 py-1 rounded text-sm
