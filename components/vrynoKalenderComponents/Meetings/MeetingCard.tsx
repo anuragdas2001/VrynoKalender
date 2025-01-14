@@ -7,9 +7,9 @@ export const MeetingCard = ({ meeting, status }) => {
       case "Upcoming":
         return "bg-green-100 text-green-700 border-green-200";
       case "Pending":
-        return "bg-yellow-100 text-yellow-700 border-yellow-200";
+        return "bg-yellow-100 text-orange-500 border-yellow-200";
       case "Past":
-        return "bg-gray-100 text-gray-700 border-gray-200";
+        return "bg-gray-200 text-gray-700 border-gray-200";
       case "Cancelled":
         return "bg-red-100 text-red-700 border-red-200";
       default:
@@ -30,7 +30,7 @@ export const MeetingCard = ({ meeting, status }) => {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
       {/* Card Header */}
-      <div className="relative p-6 pb-4">
+      <div className="flex  justify-start items-center  gap-5 p-6 pb-4">
         <span
           className={`inline-block p-3 rounded-full text-sm font-medium ${getBadgeStyle()} mb-3`}
         >

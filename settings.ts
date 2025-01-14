@@ -6,9 +6,11 @@ export const settings = [
     content: {
       description: "Manage general settings like your profile and preferences.",
       defaults: [
-        { name: "Username", value: "John Doe" },
+        { name: "Language", value: "English" },
+        { name: "Time Zone", value: "Asia/Kolkata" },
+        { name: "Time format", value: "12 hour" },
+        { name: "Start of week", value: "Sunday" },
         { name: "Email Notifications", value: "Enabled" },
-        { name: "Time Zone", value: "GMT +0" },
       ],
     },
   },
@@ -18,11 +20,8 @@ export const settings = [
     url: "/settings/calenders",
     content: {
       description: "Manage calendar settings and sync preferences.",
-      defaults: [
-        { name: "Default View", value: "Week" },
-        { name: "Start of the Week", value: "Monday" },
-        { name: "Time Zone", value: "GMT +0" },
-      ],
+      defaults: [],
+      noAppsMessage: "No calendar apps are connected yet.",
     },
   },
   {
@@ -44,10 +43,17 @@ export const settings = [
     url: "/settings/appearance",
     content: {
       description: "Customize the appearance of the application.",
+      defaults: [],
+    },
+  },
+  {
+    id: 5,
+    name: "password",
+    url: "/settings/password",
+    content: {
+      description: "Manage settings for your account passwords",
       defaults: [
-        { name: "Theme", value: "Light" },
-        { name: "Font Size", value: "Medium" },
-        { name: "Accent Color", value: "Blue" },
+        { name: "Your account is managed by Google", value: "Create" },
       ],
     },
   },

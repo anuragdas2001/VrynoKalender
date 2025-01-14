@@ -15,6 +15,7 @@ import {
   Trash2,
   MoveLeft,
   Router,
+  Text,
 } from "lucide-react";
 import IMAGES from "../../images";
 import Image from "next/image";
@@ -29,6 +30,7 @@ import SidePanel from "../../components/vrynoKalenderComponents/SidePanel/SidePa
 import { useRouter } from "next/navigation";
 import { Copy, Save } from "lucide-react";
 import { useState } from "react";
+import FormTextAreaBox from "../../components/TailwindControls/Form/TextArea/FormTextAreaBox";
 export interface TimeSlot {
   start: Date;
   end: Date;
@@ -115,7 +117,9 @@ const EventTypes = () => {
           <button onClick={handleBack} className="h-20 w-20">
             <MoveLeft size={48} />
           </button>
-          <h2 className="text-xl text-blue-500 font-semibold">{initialEvent?.Service}</h2>
+          <h2 className="text-xl text-blue-500 font-semibold">
+            {initialEvent?.Service}
+          </h2>
           <div className="flex justify-end items-center gap-4 ml-auto">
             <Button
               id="102"
@@ -153,7 +157,7 @@ const EventTypes = () => {
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex ">
           {/* SidePanel */}
           <SidePanel
             sidepanel={sidepanel}
@@ -166,141 +170,180 @@ const EventTypes = () => {
               onSubmit={(values) => handleSave(values)}
             >
               {({ values, setFieldValue }) => (
-                <Form className="flex-1 p-8 space-y-6 vryno-bg-shade">
-                  {/* Workspace Field */}
-                  <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                    <label className="w-44 flex justify-start items-center gap-2">
-                      <Clock size={24} color="#4A90E2" className="mr-2" />
-                      Workspace
-                      <Image
-                        src={IMAGES.MANDATORY}
-                        alt="required"
-                        width={5}
-                        height={5}
-                        className="ml-1"
-                      />
-                    </label>
-                    <div className="w-80">
-                      <FormInputBox
-                        type="text"
-                        name="Workspace"
-                        placeholder="Enter service name"
-                        value={values.workspace}
-                        disabled={true}
-                      />
+                <Form className="flex-1 p-8 space-y-8 bg-white rounded-lg shadow-sm">
+                  {/* Basic Information Group */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">
+                      Basic Information
+                    </h3>
+
+                    {/* Service Name Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <VideoIcon size={24} color="#F5A623" className="mr-2" />
+                        Title
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <FormInputBox
+                          type="text"
+                          name="serviceName"
+                          placeholder="Enter service name"
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Description Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <Text size={24} color="#F5A623" className="mr-2" />
+                        Description
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <FormTextAreaBox
+                          name="description"
+                          placeholder="A quick video meeting"
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Workspace Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <Clock size={24} color="#4A90E2" className="mr-2" />
+                        Workspace
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <FormInputBox
+                          type="text"
+                          name="Workspace"
+                          placeholder="Enter service name"
+                          value={values.workspace}
+                          disabled={true}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Staff Assigned Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <Users size={24} color="#E94E77" className="mr-2" />
+                        Staff Assigned
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <Dropdown
+                          name="staffAssigned"
+                          value={values.staffAssigned}
+                          onChange={(e) =>
+                            setFieldValue("staffAssigned", e.target.value)
+                          }
+                          options={staffAssignedOptions}
+                          className="w-full"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Staff Assigned Field */}
-                  <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                    <label className="w-44 flex justify-start items-center gap-2">
-                      <Users size={24} color="#E94E77" className="mr-2" />
-                      Staff Assigned
-                      <Image
-                        src={IMAGES.MANDATORY}
-                        alt="required"
-                        width={5}
-                        height={5}
-                        className="ml-1"
-                      />
-                    </label>
-                    <div className="w-80">
-                      <Dropdown
-                        name="staffAssigned"
-                        value={values.staffAssigned}
-                        onChange={(e) =>
-                          setFieldValue("staffAssigned", e.target.value)
-                        }
-                        options={staffAssignedOptions}
-                      />
+                  {/* Meeting Details Group */}
+                  <div className="space-y-6 pt-6 border-t border-gray-200">
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">
+                      Meeting Details
+                    </h3>
+
+                    {/* Duration Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <Clock size={24} color="#7F8C8D" className="mr-2" />
+                        Duration
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <Dropdown
+                          name="duration"
+                          value={values.duration}
+                          onChange={(e) =>
+                            setFieldValue("duration", e.target.value)
+                          }
+                          options={durationOptions}
+                          className="w-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Preferred Meeting Mode Field */}
+                    <div className="w-full flex items-center gap-8 hover:bg-gray-50/50 p-4 rounded-lg transition-colors border border-gray-100">
+                      <label className="w-44 flex items-center gap-2">
+                        <VideoIcon size={24} color="#9B59B6" className="mr-2" />
+                        Preferred Meeting Mode
+                        <Image
+                          src={IMAGES.MANDATORY}
+                          alt="required"
+                          width={5}
+                          height={5}
+                          className="ml-1"
+                        />
+                      </label>
+                      <div className="flex-1">
+                        <Dropdown
+                          name="meetingMode"
+                          value={values.meetingMode}
+                          onChange={(e) =>
+                            setFieldValue("meetingMode", e.target.value)
+                          }
+                          options={preferredMeetingModeOptions}
+                          className="w-full"
+                        />
+                      </div>
                     </div>
                   </div>
-
-                  {/* Service Name Field */}
-                  <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                    <label className="w-44 flex justify-start items-center gap-2">
-                      <VideoIcon size={24} color="#F5A623" className="mr-2" />
-                      Service Name
-                      <Image
-                        src={IMAGES.MANDATORY}
-                        alt="required"
-                        width={5}
-                        height={5}
-                        className="ml-1"
-                      />
-                    </label>
-                    <div className="w-80">
-                      <FormInputBox
-                        type="text"
-                        name="serviceName"
-                        placeholder="Enter service name"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Duration Field */}
-                  <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                    <label className="w-44 flex justify-start items-center gap-2">
-                      <Clock size={24} color="#7F8C8D" className="mr-2" />
-                      Duration
-                      <Image
-                        src={IMAGES.MANDATORY}
-                        alt="required"
-                        width={5}
-                        height={5}
-                        className="ml-1"
-                      />
-                    </label>
-                    <div className="w-80">
-                      <Dropdown
-                        name="duration"
-                        value={values.duration}
-                        onChange={(e) =>
-                          setFieldValue("duration", e.target.value)
-                        }
-                        options={durationOptions}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Preferred Meeting Mode Field */}
-                  <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
-                    <label className="w-44 flex justify-start items-center gap-2">
-                      <VideoIcon size={24} color="#9B59B6" className="mr-2" />
-                      Preferred Meeting Mode
-                      <Image
-                        src={IMAGES.MANDATORY}
-                        alt="required"
-                        width={5}
-                        height={5}
-                        className="ml-1"
-                      />
-                    </label>
-                    <div className="w-80">
-                      <Dropdown
-                        name="meetingMode"
-                        value={values.meetingMode}
-                        onChange={(e) =>
-                          setFieldValue("meetingMode", e.target.value)
-                        }
-                        options={preferredMeetingModeOptions}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Buttons */}
                 </Form>
               )}
             </Formik>
           ) : tabName === "availability_page" ? (
-            <div className="h-screen w-full">
+            <div className="h-screen w-full bg-white">
               <Formik
                 initialValues={availabilityInitalvalues}
                 onSubmit={(values) => handleSave(values)}
               >
                 {({ values, setFieldValue }) => (
                   <Form className="flex-1 p-8 space-y-6">
-                    <div className="w-full flex justify-start items-center gap-8 hover:bg-gray-50 p-2 rounded-md transition-colors">
+                    <div className="w-full flex justify-start items-center gap-8  p-2  ">
                       <label className="w-44 flex justify-start items-center gap-2">
                         <Calendar size={24} color="#4A90E2" className="mr-2" />
                         Availability

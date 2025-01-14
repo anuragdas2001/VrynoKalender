@@ -1,4 +1,4 @@
-import { paramCase } from "change-case";
+// import { paramCase } from "change-case";
 import { SupportedApps } from "../../../../../models/shared";
 import { AllowedViews } from "../../../../../models/allowedViews";
 
@@ -9,7 +9,7 @@ export const appsUrlGenerator = (
   id: string | undefined = undefined,
   additionalParts: string[] = []
 ) => {
-  let url = `/app/${appName}/${paramCase(
+  let url = `/app/${appName}/${(
     modelName || "no-model-name"
   )}/${actionName}`;
   if (id) {

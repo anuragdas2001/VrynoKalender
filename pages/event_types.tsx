@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Dropdown from "../components/TailwindControls/Form/Dropdown/Dropdown";
 import { Formik, Form } from "formik";
-import { CalendarPlus } from "lucide-react";
+import { CalendarPlus, Copy } from "lucide-react";
 import EventForm from "../components/vrynoKalenderComponents/EventForm/EventForm";
 import { meetingsData } from "../meeting";
 import { events } from "../event";
@@ -45,6 +45,8 @@ const event_types = () => {
   const [selectedValue, setSelectedValue] = useState<string | undefined>();
   const [createdEvent, setCreatedEvent] = useState<Event[]>([...events]);
   const [isEventFormVisible, setIsEventFormVisible] = useState(false);
+  const [isCopiedMap, setIsCopiedMap] = useState<{ [id: number]: boolean }>({});
+
   const router = useRouter();
 
   const handleCreateEvent = () => {
@@ -53,6 +55,32 @@ const event_types = () => {
 
   const handleCancel = () => {
     setIsEventFormVisible(false);
+  };
+  const handleCopyLink = async (serviceName: string, eventId: number) => {
+    try {
+      const formattedServiceName = serviceName
+        .toLowerCase()
+        .replace(/\s+/g, "-");
+
+      const url = `http://localhost:3000/bookings/anuragdas12921/${formattedServiceName}`;
+      await navigator.clipboard.writeText(url);
+
+      // Update copied state for the specific event
+      setIsCopiedMap((prev) => ({
+        ...prev,
+        [eventId]: true,
+      }));
+
+      // Reset the copied state for this specific event after 2 seconds
+      setTimeout(() => {
+        setIsCopiedMap((prev) => ({
+          ...prev,
+          [eventId]: false,
+        }));
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
   };
 
   return (
@@ -73,6 +101,19 @@ const event_types = () => {
         >
           <CalendarPlus />
         </Button>
+      </div>
+      <div className="flex justify-center gap-4 mb-6">
+        <img
+          className="h-10 w-10 rounded-full"
+          src="https://res.cloudinary.com/dgz1duuwu/image/upload/v1719236393/nu2oa9upb9n6kwjrjyxq.jpg"
+          alt=""
+        />
+        <div className="flex flex-col justify-center items-start">
+          <div className="font-semibold text-gray-800">Anurag Das</div>
+          <Link href="" className="text-blue-500 hover:underline">
+            https://vrynokalender.com/anuragdas12921
+          </Link>
+        </div>
       </div>
 
       {/* Event Form Modal */}
@@ -102,7 +143,6 @@ const event_types = () => {
                 <div className="flex items-center gap-4 mb-4">
                   <div className="bg-blue-50 rounded-full p-3 flex-shrink-0">
                     <Image
-                      // src="/icons/event-icon.png"
                       src={IMAGES.BOOKINGS}
                       alt="Event Icon"
                       width={24}
@@ -110,13 +150,26 @@ const event_types = () => {
                       className="w-6 h-6"
                     />
                   </div>
-                  <div>
+                  <div className="flex-grow">
                     <span className="text-sm text-gray-500">
                       #{eventtype.id}
                     </span>
                     <h3 className="text-lg font-medium text-gray-900">
                       {eventtype.Service || "Event Title"}
                     </h3>
+                  </div>
+                  <div>
+                    <Button
+                      id="401"
+                      userEventName="copy-link"
+                      customStyle=""
+                      onClick={() =>
+                        handleCopyLink(eventtype.Service, eventtype.id)
+                      }
+                    >
+                      <Copy className="text-blue-500" />
+                      {isCopiedMap[eventtype.id] ? "Copied!" : ""}
+                    </Button>
                   </div>
                 </div>
 

@@ -75,7 +75,7 @@ export const DashboardSidePageNavigationItem = ({
       ) : (
         <Button
           id={`handle-${dashboard?.name}-user-preference-false`}
-          customStyle="pl-2 cursor-pointer"
+          customStyle="px-4 py-4 cursor-pointer"
           onClick={() => handlePreferencesChange(dashboard, true)}
           userEventName="dashboard-toggle-user-preference-false-click"
           renderChildrenOnly={true}
@@ -85,7 +85,7 @@ export const DashboardSidePageNavigationItem = ({
         </Button>
       )}
       <a
-        className="col-span-5 text-sm block break-all truncate px-2 py-2.5"
+        className="col-span-5 text-sm block break-all truncate px-4 py-4"
         href={dashboard.url}
         onClick={() => {
           setCurrentPageNavigation(dashboard);
@@ -94,7 +94,7 @@ export const DashboardSidePageNavigationItem = ({
         key={index}
       >
         {!isCollapsed ? (
-          <span className="text-xs ">{dashboard?.name}</span>
+          <span className="text-xs">{dashboard?.name}</span>
         ) : (
           ""
         )}

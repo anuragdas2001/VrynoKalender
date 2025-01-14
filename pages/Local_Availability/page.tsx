@@ -104,7 +104,7 @@ const Local_Availability = ({ availabilityID }: any) => {
   // console.log("initialValues", initialValues);
   return (
     <div className="min-h-screen  ">
-      <div className=" w-full mx-auto bg-white shadow-xl rounded-xl ">
+      <div className=" w-full mx-auto  ">
         <div className="p-6 sm:p-10">
           <div className="flex items-center mb-8 space-x-4">
             <Clock className="w-10 h-10 text-blue-600" />

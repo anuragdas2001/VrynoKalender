@@ -23,7 +23,15 @@ export const meetingsData = {
       icon: CalendarArrowDown,
     },
   ],
-  Pending: [],
+  Pending: [
+    {
+      id: 1,
+      title: "Vryno CRM",
+      date: "2024-12-15",
+      time: "10:00 AM",
+      icon: CalendarCog,
+    },
+  ],
   Past: [
     {
       id: 5,

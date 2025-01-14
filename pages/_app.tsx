@@ -23,17 +23,24 @@ export const MessageListContext = createContext<{
 }>({ instanceMessage: [], appMessage: [] });
 
 const client = new ApolloClient({
-  uri: "https://your-graphql-endpoint.com/graphql", // Replace with your GraphQL endpoint
+  uri: "https://your-graphql-endpoint.com/graphql",
   cache: new InMemoryCache(),
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+} & AppProps["Component"];
+
+interface CustomAppProps extends AppProps {
+  Component: NextPageWithLayout;
+}
+
+export default function App({ Component, pageProps }: CustomAppProps) {
   const dashboardArr: IDashboardDetails[] = dashboardDetails;
   const router = useRouter();
   const currentTab = router.asPath.split("/")[1];
   const currentTab2 = router.asPath.split("/")[2];
-  //availability shrink of dashboard
-  console.log("currentTab2", currentTab2);
+  
   const isCollapsed =
     currentTab === "meetings" ||
     (currentTab === "event_types" && Boolean(currentTab2)) ||
@@ -52,7 +59,17 @@ export default function App({ Component, pageProps }: AppProps) {
   }): void => {
     console.log("setDeleteModal", tempObj);
   };
-  console.log("isCollapsed", isCollapsed);
+
+  // Check if the page has a custom layout
+  if (Component.getLayout) {
+    return (
+      <ApolloProvider client={client}>
+        {Component.getLayout(<Component {...pageProps} />)}
+      </ApolloProvider>
+    );
+  }
+
+  // Default layout
   return (
     <div className="relative flex w-full h-full">
       <div

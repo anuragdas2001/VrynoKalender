@@ -76,18 +76,18 @@ const DashboardSidePageNavigation = ({
       }`}
     >
       <div
-        className={`h-14 w-full  flex justify-between items-center  ${
-          isCollapsed ? "justify-center" : ""
+        className={`h-14 w-full items-center  ${
+          isCollapsed ? "" : "flex justify-start"
         }`}
       >
-        <Image src={IMAGES.LOGO} alt="logo_image" className="w-8 h-8" />
-        {isCollapsed ? (
+        <Image src={IMAGES.LOGO} alt="logo_image" className="w-8 h-8 mx-2" />
+        {!isCollapsed ? (
           <span className="text-[#2f98ff] text-[22px] font-semibold sm:text-[17px] md:text-[14px] lg:text-[16px] xl:text-[20px]">
-            {/* VrynoKalendar */}
+            VrynoKalendar
           </span>
         ) : (
           <span className="text-[#2f98ff] text-[22px] font-semibold sm:text-[17px] md:text-[14px] lg:text-[16px] xl:text-[20px]">
-            VrynoKalendar
+            {/* VrynoKalendar */}
           </span>
         )}
       </div>
