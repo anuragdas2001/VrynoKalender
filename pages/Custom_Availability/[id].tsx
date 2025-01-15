@@ -18,15 +18,14 @@ const convertTimeToDate = (time) => {
   return date;
 };
 
-const Custom_Availability = () => {
+const CustomAvailability = () => {
   const params = useParams();
   const availabilityID = Number(params?.id);
 
-  // Fetch availability name based on ID, with a fallback
   const [availabilityName, setAvailabilityName] = useState("");
 
   useEffect(() => {
-    const availabilityItem = availability[availabilityID - 1]; // Subtract 1 to align with 0-based index
+    const availabilityItem = availability[availabilityID - 1];
     if (availabilityItem) {
       setAvailabilityName(availabilityItem.availabilityName);
     } else {
@@ -34,16 +33,14 @@ const Custom_Availability = () => {
     }
   }, [availabilityID]);
 
-  // Default times as Date objects
   const defaultTimes = daysOfWeek.reduce((acc, day) => {
-    acc[`${day.key}Start`] = convertTimeToDate("09:00"); // 9:00 AM as Date object
-    acc[`${day.key}End`] = convertTimeToDate("17:00"); // 5:00 PM as Date object
+    acc[`${day.key}Start`] = convertTimeToDate("09:00");
+    acc[`${day.key}End`] = convertTimeToDate("17:00");
     return acc;
   }, {});
 
   const [extraTimeslots, setExtraTimeslots] = useState({});
 
-  // Add a new time slot for a given day
   const addTimeSlot = (dayKey) => {
     setExtraTimeslots((prev) => ({
       ...prev,
@@ -54,7 +51,6 @@ const Custom_Availability = () => {
     }));
   };
 
-  // Remove a time slot for a given day
   const removeTimeSlot = (dayKey, index) => {
     setExtraTimeslots((prev) => {
       const updatedTimes = prev[dayKey].filter((_, i) => i !== index);
@@ -62,7 +58,6 @@ const Custom_Availability = () => {
     });
   };
 
-  // Handle changes in additional time slots
   const handleAdditionalTimeChange = (dayKey, index, field, value) => {
     setExtraTimeslots((prev) => {
       const updatedTimes = [...(prev[dayKey] || [])];
@@ -85,7 +80,6 @@ const Custom_Availability = () => {
         <h1 className="text-2xl font-bold text-center text-blue-700 mb-6">
           {availabilityName || "Loading..."}
         </h1>
-
         <Formik
           initialValues={defaultTimes}
           validationSchema={Yup.object(
@@ -112,82 +106,88 @@ const Custom_Availability = () => {
           {({ values, setFieldValue }) => (
             <Form>
               {daysOfWeek.map((day) => (
-                <div key={day.key} className="mb-6 flex flex-col">
-                  <div className="flex items-center">
-                    {/* Day Name */}
-                    <h3 className="w-1/5 text-base font-semibold text-gray-700 text-center">
-                      {day.name}
-                    </h3>
+                <div key={day.key} className="mb-6">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center">
+                      <h3 className="w-1/5 text-base font-semibold text-gray-700 text-center">
+                        {day.name}
+                      </h3>
 
-                    {/* Time Pickers */}
-                    <div className="flex items-center gap-20 w-3/5">
-                      <FormTimePicker
-                        name={`${day.key}Start`}
-                        placeholder="Start Time"
-                        value={values[`${day.key}Start`]}
-                        onChange={(value) =>
-                          setFieldValue(`${day.key}Start`, value)
-                        }
-                      />
-                      <FormTimePicker
-                        name={`${day.key}End`}
-                        placeholder="End Time"
-                        value={values[`${day.key}End`]}
-                        onChange={(value) =>
-                          setFieldValue(`${day.key}End`, value)
-                        }
-                      />
-                    </div>
+                      <div className="flex items-center gap-x-6 w-3/5">
+                        {/* Default Time Slot with Increased Space */}
+                        <div className="flex items-center gap-x-20">
+                          <FormTimePicker
+                            name={`${day.key}Start`}
+                            placeholder="Start Time"
+                            value={values[`${day.key}Start`]}
+                            onChange={(value) =>
+                              setFieldValue(`${day.key}Start`, value)
+                            }
+                          />
+                          <span className="text-gray-500 font-semibold">-</span>
+                          <FormTimePicker
+                            name={`${day.key}End`}
+                            placeholder="End Time"
+                            value={values[`${day.key}End`]}
+                            onChange={(value) =>
+                              setFieldValue(`${day.key}End`, value)
+                            }
+                          />
+                        </div>
+                      </div>
 
-                    {/* Add New Time Slot Button */}
-                    <div className="flex gap-20 items-center">
                       <button
                         type="button"
                         onClick={() => addTimeSlot(day.key)}
-                        className="text-blue-600 hover:text-blue-800"
+                        className="text-blue-600 hover:text-blue-800 flex items-center justify-center"
                       >
                         <Plus size={20} />
                       </button>
                     </div>
-                  </div>
 
-                  {/* Additional Time Slots */}
-                  <div className="ml-[20%] mt-4">
+                    {/* Extra Time Slots with Increased Space */}
                     {extraTimeslots[day.key]?.map((slot, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-20 mb-4 w-3/5"
+                        className="flex items-center justify-center ml-2 w-full mt-2"
                       >
-                        <FormTimePicker
-                          name={`${day.key}StartAdditional-${index}`}
-                          placeholder="Start Time"
-                          value={slot.start}
-                          onChange={(value) =>
-                            handleAdditionalTimeChange(
-                              day.key,
-                              index,
-                              "start",
-                              value
-                            )
-                          }
-                        />
-                        <FormTimePicker
-                          name={`${day.key}EndAdditional-${index}`}
-                          placeholder="End Time"
-                          value={slot.end}
-                          onChange={(value) =>
-                            handleAdditionalTimeChange(
-                              day.key,
-                              index,
-                              "end",
-                              value
-                            )
-                          }
-                        />
+                        <div className="flex items-center gap-x-6 w-3/5">
+                          <div className="flex items-center gap-x-20">
+                            <FormTimePicker
+                              name={`${day.key}StartAdditional-${index}`}
+                              placeholder="Start Time"
+                              value={slot.start}
+                              onChange={(value) =>
+                                handleAdditionalTimeChange(
+                                  day.key,
+                                  index,
+                                  "start",
+                                  value
+                                )
+                              }
+                            />
+                            <span className="text-gray-500 font-semibold">
+                              -
+                            </span>
+                            <FormTimePicker
+                              name={`${day.key}EndAdditional-${index}`}
+                              placeholder="End Time"
+                              value={slot.end}
+                              onChange={(value) =>
+                                handleAdditionalTimeChange(
+                                  day.key,
+                                  index,
+                                  "end",
+                                  value
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
                         <button
                           type="button"
                           onClick={() => removeTimeSlot(day.key, index)}
-                          className="text-red-600 hover:text-red-800"
+                          className="text-red-600 hover:text-red-800 flex items-center justify-center"
                         >
                           <X size={20} />
                         </button>
@@ -213,4 +213,4 @@ const Custom_Availability = () => {
   );
 };
 
-export default Custom_Availability;
+export default CustomAvailability;

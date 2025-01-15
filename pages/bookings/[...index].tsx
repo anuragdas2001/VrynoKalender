@@ -10,10 +10,10 @@ import {
 } from "date-fns";
 import { enUS } from "date-fns/locale";
 import Link from "next/link";
-import { Clock, Video, Globe } from "lucide-react";
+import { Clock, Video, Globe, ChevronRight } from "lucide-react";
 import Button from "../../components/TailwindControls/Form/Button/Button";
 import { timeslots } from "../../timeslot";
-
+import { useRouter } from "next/router";
 // Types
 interface CalendarEvent {
   title: string;
@@ -44,10 +44,25 @@ const localizer = dateFnsLocalizer({
 
 const TimeSlots = () => {
   const [activeTimeSlot, setActiveTimeSlot] = useState<string | null>(null);
-
+  const [showNext, setShowNext] = useState(false);
+  const router = useRouter();
+  const route1 = router.asPath.split("/")[1];
+  const route2 = router.asPath.split("/")[2];
+  const route3 = router.asPath.split("/")[3];
+  console.log("route1", route1);
+  console.log("route2", route2);
+  console.log("route3", route3);
   const handleTimeSlotClick = (time: string) => {
-    setActiveTimeSlot(time); // Set the clicked time slot as active
+    setActiveTimeSlot(time);
+    setShowNext(true);
     console.log("Selected time:", time);
+  };
+
+  const handleNextClick = () => {
+    // Handle navigation to the booking form or next step
+    console.log("Proceeding with selected time:", activeTimeSlot);
+    router.push(`/bookings/form/${route2}/${route3}`);
+
   };
 
   return (
@@ -60,22 +75,39 @@ const TimeSlots = () => {
       </h3>
 
       {timeslots ? (
-        <div className="grid grid-cols-3 gap-3">
-          {timeslots.map((time) => (
-            <Button
-              id="601"
-              userEventName="timeslot-selection"
-              key={time} // Use 'button' instead of 'Button' to ensure it works as expected
-              customStyle={`p-2 hover:bg-blue-50 hover:border-blue-500 rounded-xl transition-colors border ${
-                activeTimeSlot === time
-                  ? "bg-blue-500 text-white border-blue-500" // Active state styling
-                  : "bg-white text-gray-900 border-gray-300"
-              }`}
-              onClick={() => handleTimeSlotClick(time)} // Set the active time slot on click
-            >
-              {time}
-            </Button>
-          ))}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-3">
+            {timeslots.map((time) => (
+              <Button
+                id="601"
+                userEventName="timeslot-selection"
+                key={time}
+                customStyle={`p-2 hover:bg-blue-50 hover:border-blue-500 rounded-xl transition-colors border ${
+                  activeTimeSlot === time
+                    ? "bg-blue-500 text-white border-blue-500"
+                    : "bg-white text-gray-900 border-gray-300"
+                }`}
+                onClick={() => handleTimeSlotClick(time)}
+              >
+                {time}
+              </Button>
+            ))}
+          </div>
+
+          {/* Next Button */}
+          {showNext && (
+            <div className="pt-4 border-t border-gray-200">
+              <Button
+                id="next-button"
+                userEventName="next-step"
+                customStyle="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium p-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                onClick={handleNextClick}
+              >
+                <span>Next</span>
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
+          )}
         </div>
       ) : (
         <p className="text-gray-600">
