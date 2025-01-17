@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-import { Field } from "formik";
-import TimePicker from "../../TailwindControls/Form/TimePicker/TimePicker";
-import { daysOfWeek } from "../../../daysofweek";
-import dayjs from "dayjs";
+import React from "react";
 import FormTimePicker from "../../TailwindControls/Form/TimePicker/FormTimePicker";
+import { daysOfWeek } from "../../../daysofweek";
+
 const WeeklySchedule = ({ availabilityID, errors, touched, setFieldValue }) => {
-  // Define your availability list
   const availability = [
     {
       id: "1",
@@ -36,89 +33,72 @@ const WeeklySchedule = ({ availabilityID, errors, touched, setFieldValue }) => {
     },
   ];
 
-  // Find the selected availability based on the passed ID
   const selectedAvailability = availability.find(
     (av) => av.id === availabilityID
   );
 
-  // Ensure there's an availability object
   if (!selectedAvailability) {
     return null;
   }
 
-  // Debug: Log selected availability
-  //   console.log('Selected Availability:', selectedAvailability);
-
-  // Iterate over each day of the week and map it to the time slots
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {daysOfWeek.map((day) => {
-        // Check if the day is in the selected availability's workDays
         const isWorkingDay = selectedAvailability.workDays.includes(day.name);
-
-        // Find the timeSlots for the current day if it's a working day
         const timeSlot = isWorkingDay
-          ? selectedAvailability.timeSlots[0] // Assuming one timeslot per availability object
+          ? selectedAvailability.timeSlots[0]
           : null;
-
-        // Debug: Log the timeSlot for the day
-        // console.log(`TimeSlot for ${day.name}:`, timeSlot);
 
         return (
           <div
             key={day.key}
-            className="grid grid-cols-3 gap-4 items-center  rounded-lg"
+            className="flex items-center  rounded-lg"
           >
-            <h4 className="text-md font-semibold text-gray-700">{day.name}</h4>
+            {/* Day Name */}
+            <h4 className="text-md font-semibold text-gray-700 w-1/4">
+              {day.name}
+            </h4>
 
-            <div>
-              {/* <Field
-                id={`${day.key}Start`}
-                key={`${day.key}Start`}
-                name={`${day.key}Start`}
-                component={TimePicker}
-                placeholder="Start Time"
-                value={timeSlot ? timeSlot.start : "12:00am"}
-                // Optionally use setFieldValue to directly update Formik field value
-                onChange={(value) => {
-                  console.log("Onchange Value",value);
-                  setFieldValue(`${day.key}Start`, value);
-                }}
-              /> */}
-              {/* <TimePicker  name={day.key}/> */}
-              <FormTimePicker
-                key={`${day.key}Start`}
-                name={`${day.key}Start`}
-                placeholder="Start Time"
-                value={timeSlot ? timeSlot.start : "12:00am"}
-                // Optionally use setFieldValue to directly update Formik field value
-                onChange={(value) => {
-                  console.log("Onchange Value", value);
-                  setFieldValue(`${day.key}Start`, value);
-                }}
-              />
-              {errors[`${day.key}Start`] && touched[`${day.key}Start`] && (
-                <div className="text-red-500 text-xs mt-1">
-                  {errors[`${day.key}Start`]}
-                </div>
-              )}
-            </div>
+            {/* Time Pickers with Hyphen */}
+            <div className="flex items-center justify-between gap-10">
+              {/* Start Time Picker */}
+              <div className="w-1/3">
+                <FormTimePicker
+                  key={`${day.key}Start`}
+                  name={`${day.key}Start`}
+                  placeholder="Start Time"
+                  value={timeSlot ? timeSlot.start : "12:00am"}
+                  onChange={(value) => {
+                    setFieldValue(`${day.key}Start`, value);
+                  }}
+                />
+                {errors[`${day.key}Start`] && touched[`${day.key}Start`] && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors[`${day.key}Start`]}
+                  </div>
+                )}
+              </div>
 
-            <div>
-              <FormTimePicker
-                key={`${day.key}End`}
-                name={`${day.key}End`}
-                placeholder="End Time"
-                value={timeSlot ? timeSlot.end : ""}
-                onChange={(value) => {
-                  setFieldValue(`${day.key}End`, value);
-                }}
-              />
-              {errors[`${day.key}End`] && touched[`${day.key}End`] && (
-                <div className="text-red-500 text-xs mt-1">
-                  {errors[`${day.key}End`]}
-                </div>
-              )}
+              {/* Hyphen */}
+              <div className="text-gray-700 font-medium text-center">-</div>
+
+              {/* End Time Picker */}
+              <div className="w-1/3">
+                <FormTimePicker
+                  key={`${day.key}End`}
+                  name={`${day.key}End`}
+                  placeholder="End Time"
+                  value={timeSlot ? timeSlot.end : ""}
+                  onChange={(value) => {
+                    setFieldValue(`${day.key}End`, value);
+                  }}
+                />
+                {errors[`${day.key}End`] && touched[`${day.key}End`] && (
+                  <div className="text-red-500 text-xs mt-1">
+                    {errors[`${day.key}End`]}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         );
