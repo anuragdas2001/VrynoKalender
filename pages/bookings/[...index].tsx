@@ -217,7 +217,7 @@ const Bookings: React.FC<CalendarProps> = ({
                 defaultView="month"
                 startAccessor="start"
                 endAccessor="end"
-                className="min-h-[600px] max-w-full" // Full width for calendar
+                style={{ height: 500 }}
                 components={{
                   event: ({ event }) => (
                     <Link
